@@ -3,6 +3,7 @@ package Application.Service;
 import Application.Model.Flight;
 import Application.DAO.FlightDAO;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,7 +54,7 @@ public class FlightService {
      *         inform our provide the front-end client with information about the added Flight.
      */
     public Flight addFlight(Flight flight){
-        return null;
+        return flightDAO.insertFlight(flight);
     }
 
     /**
@@ -70,7 +71,12 @@ public class FlightService {
      *         user should have some insight if they attempted to edit a nonexistent flight.)
      */
     public Flight updateFlight(int flight_id, Flight flight){
-        return null;
+        if (flightDAO.getFlightById(flight_id) == null) {
+            return null;
+        }
+
+        Flight modFlight = flightDAO.getFlightById(flight_id);
+        return modFlight;
     }
 
     /**
@@ -80,7 +86,8 @@ public class FlightService {
      * @return all flights in the database.
      */
     public List<Flight> getAllFlights() {
-        return null;
+        List<Flight> flightList = new LinkedList<Flight>(flightDAO.getAllFlights());
+        return flightList;
     }
 
     /**
@@ -92,6 +99,8 @@ public class FlightService {
      * @return all flights departing from departure_city and arriving at arrival_city.
      */
     public List<Flight> getAllFlightsFromCityToCity(String departure_city, String arrival_city) {
-        return null;
+        List<Flight> flightList = new LinkedList<Flight>(flightDAO.getAllFlightsFromCityToCity(departure_city, arrival_city));
+        
+        return flightList;
     }
 }
